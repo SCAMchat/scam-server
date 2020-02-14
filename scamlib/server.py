@@ -5,8 +5,8 @@ import socket
 HOST = ""
 
 
-def run():
-
+def run(host, port, buffer = 4096):
+    print("Starting Server")
 
 TCP_IP = '127.0.0.1'
 TCP_PORT = 42069
