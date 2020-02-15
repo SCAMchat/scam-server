@@ -52,7 +52,7 @@ def client_thread(conn, addr):
         PacketQueue, ClientSettings, CloseConnection = parsePacket(data.decode("utf-8"), ClientSettings, ServerSettings)
         for Strings in PacketQueue:
             conn.sendall(bytes(Strings, "utf-8"))
-    print("[" + addr[0] + ":" + str(addr[1]) + "] Client Disconnected.")
+    print("[" + addr[0] + ":" + str(addr[1]) + "] Client Disconnected, Connection closed.")
     conn.close()
 
 while True:
