@@ -2,7 +2,7 @@
 def checkAuth(uname,passwd):
     return True
 
-def parsePacket(packetString, ClientSettings, ServerSettings):
+def parsePacket(packetString, ClientSettings, ServerSettings, CloseServer, GlobalBroadcastPackets):
     packetQueue = []
     CloseConnection = False
 
@@ -38,10 +38,13 @@ def parsePacket(packetString, ClientSettings, ServerSettings):
         else: # liogin uiser without password as server does not need auth.
             packetQueue.append(ClientSettings["Token"])
             ClientSettings["Stage"] = "ServerConnection"
-
     
-
-
-
-    return packetQueue, ClientSettings, CloseConnection
-
+    elif "ServerConnection" in ClientSettings["Stage"] :
+        if packetString[0:3] == "MSG" and packetString[-3:] == "END":
+            message = packetString[4:]
+            packetQueue.append("OKAY")
+            GlobalBroadcastPackets.append("UPDATE\n"+message)
+        
+    else:
+        packetQueue.append("100")
+    return packetQueue, ClientSettings, CloseConnection, CloseServer, GlobalBroadcastPackets
