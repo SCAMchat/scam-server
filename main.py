@@ -1,1 +1,1 @@
-from scamlib import server
+import server
